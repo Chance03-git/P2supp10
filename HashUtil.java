@@ -11,22 +11,23 @@ public class HashUtil {
         SHA1,     // SHA-1 hash algorithm
         SHA256    // SHA-256 hash algorithm
     }
+    /**
+     * Hashes a given string using the specified hash algorithm.
+     * 
+     * @param input     The string to be hashed.
+     * @param algorithm The algorithm to be used for hashing (MD5, SHA-1, SHA-256).
+     * @return The hashed string in hexadecimal format.
+     * @throws NoSuchAlgorithmException if the provided algorithm is not supported.
+     */
     public static String hashString(String input, HashAlgorithm algorithm) throws NoSuchAlgorithmException {
         MessageDigest messageDigest;
 
         // Select the hash algorithm based on the enum value
         switch (algorithm) {
-            case MD5:
-                messageDigest = MessageDigest.getInstance("MD5");
-                break;
-            case SHA1:
-                messageDigest = MessageDigest.getInstance("SHA-1");
-                break;
-            case SHA256:
-                messageDigest = MessageDigest.getInstance("SHA-256");
-                break;
-            default:
-                throw new IllegalArgumentException("Unsupported hash algorithm: " + algorithm);
+            case MD5 -> messageDigest = MessageDigest.getInstance("MD5");
+            case SHA1 -> messageDigest = MessageDigest.getInstance("SHA-1");
+            case SHA256 -> messageDigest = MessageDigest.getInstance("SHA-256");
+            default -> throw new IllegalArgumentException("Unsupported hash algorithm: " + algorithm);
         }
          // Hash the input string
         byte[] hashBytes = messageDigest.digest(input.getBytes());
