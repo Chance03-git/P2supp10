@@ -1,4 +1,41 @@
+import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
+import java.util.Base64;
+
 public class SaltedHashGenerator {
+    public enum HashAlgorithm {
+        MD5("MD5"),
+        SHA1("SHA-1"),
+        SHA256("SHA-256"),
+        SHA512("SHA-512");
+
+        private final String algorithm;
+
+        HashAlgorithm(String algorithm) {
+            this.algorithm = algorithm;
+        }
+
+        public String getAlgorithm() {
+            return algorithm;
+        }
+    }
+    public static String generateSaltedHash(String input, String salt, HashAlgorithm algorithm) {
+        try {
+            // Combine the input string and salt
+            String saltedInput = input + salt;
+
+            // Get the MessageDigest instance for the specified algorithm
+            MessageDigest digest = MessageDigest.getInstance(algorithm.getAlgorithm());
+
+            // Compute the hash of the salted input
+            byte[] hashedBytes = digest.digest(saltedInput.getBytes());
+
+            // Encode the hashed bytes to a Base64 string
+            return Base64.getEncoder().encodeToString(hashedBytes);
+        } catch (NoSuchAlgorithmException e) {
+            throw new IllegalArgumentException("Unsupported hashing algorithm: " + algorithm.getAlgorithm(), e);
+        }
+    }
     /**
      * Main method for testing the salted hash generator functionality.
      *
