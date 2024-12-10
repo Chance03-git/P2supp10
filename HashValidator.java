@@ -1,6 +1,33 @@
 import java.util.Base64;
 
 public class HashValidator {
+    public enum HashAlgorithm {
+        MD5("MD5"),
+        SHA1("SHA-1"),
+        SHA256("SHA-256"),
+        SHA512("SHA-512");
+
+        private final String algorithm;
+
+        HashAlgorithm(String algorithm) {
+            this.algorithm = algorithm;
+        }
+
+        public String getAlgorithm() {
+            return algorithm;
+        }
+    }
+    private static byte[] hexStringToBytes(String hex) {
+        int len = hex.length();
+        byte[] data = new byte[len / 2];
+        for (int i = 0; i < len; i += 2) {
+            data[i / 2] = (byte) ((Character.digit(hex.charAt(i), 16) << 4)
+                                + Character.digit(hex.charAt(i + 1), 16));
+        }
+        return data;
+    }
+
+
     public static void main(String[] args) {
         // Test case
         String input = "password123";
