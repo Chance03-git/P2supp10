@@ -1,8 +1,14 @@
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.util.Base64;
+/**
+ * This class provides functionality to generate salted hashes using specified algorithms.
+ */
 
 public class SaltedHashGenerator {
+    /**
+     * Enum to represent supported hashing algorithms.
+     */
     public enum HashAlgorithm {
         MD5("MD5"),
         SHA1("SHA-1"),
@@ -19,6 +25,15 @@ public class SaltedHashGenerator {
             return algorithm;
         }
     }
+    /**
+     * Generates a salted hash of a given input string using the specified algorithm.
+     *
+     * @param input     The input string to hash.
+     * @param salt      The salt to append to the input string before hashing.
+     * @param algorithm The hashing algorithm to use.
+     * @return The Base64-encoded salted hash.
+     * @throws IllegalArgumentException if the hashing algorithm is not supported.
+     */
     public static String generateSaltedHash(String input, String salt, HashAlgorithm algorithm) {
         try {
             // Combine the input string and salt
